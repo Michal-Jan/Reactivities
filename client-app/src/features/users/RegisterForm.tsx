@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import {ErrorMessage, Form, Formik} from 'formik';
 import MyTextInput from "../../app/common/form/MyTextInput";
 import {Button, Header} from "semantic-ui-react";
