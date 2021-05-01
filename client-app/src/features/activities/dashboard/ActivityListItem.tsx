@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Activity } from '../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
-import ActivityListItemAttendee from "./ActivityListItemAttendee";
+import {format} from "date-fns";
 
 interface Props {
   activity: Activity;
@@ -27,15 +27,13 @@ export default observer(function ActivityListItem({ activity }: Props) {
       </Segment>
       <Segment>
         <span>
-          <Icon name='clock' /> {activity.date}
+          <Icon name='clock' /> {format(activity.date!, 'dd.MM.yyyy HH:mm')}
         </span>
         <span>
           <Icon name='marker' /> {activity.venue}
         </span>
       </Segment>
-      <Segment secondary>
-          <ActivityListItemAttendee attendees={activity.attendees!} />
-      </Segment>
+      <Segment secondary>Attendies</Segment>
       <Segment clearing>
         <span>{activity.description}</span>
         <Button
