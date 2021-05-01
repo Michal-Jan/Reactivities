@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Activity } from '../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
+import ActivityListItemAttendee from "./ActivityListItemAttendee";
 
 interface Props {
   activity: Activity;
@@ -32,7 +33,9 @@ export default observer(function ActivityListItem({ activity }: Props) {
           <Icon name='marker' /> {activity.venue}
         </span>
       </Segment>
-      <Segment secondary>Attendies</Segment>
+      <Segment secondary>
+          <ActivityListItemAttendee attendees={activity.attendees!} />
+      </Segment>
       <Segment clearing>
         <span>{activity.description}</span>
         <Button
