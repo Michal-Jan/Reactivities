@@ -16,20 +16,17 @@ axios.defaults.baseURL = 'http://localhost:5000/api';
 
 axios.interceptors.request.use(config => {
   const token = store.commonStore.token;
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) config.headers.Authorization = `Bearer ${token}`
   return config;
-});
+})
 
-axios.interceptors.response.use(async (response) => {
-      await sleep(250);
-      return response;
+axios.interceptors.response.use(async response => {
+  await sleep(100);
+  return response;
 }, (error: AxiosError) => {
-  const { data, status, config } = error.response!;
+  const {data, status, config} = error.response!;
   switch (status) {
     case 400:
-      if (typeof data === 'string') {
-        toast.error(data);
-      }
       if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
         history.push('/not-found');
       }
@@ -37,17 +34,16 @@ axios.interceptors.response.use(async (response) => {
         const modalStateErrors = [];
         for (const key in data.errors) {
           if (data.errors[key]) {
-            modalStateErrors.push(data.errors[key]);
+            modalStateErrors.push(data.errors[key])
           }
         }
         throw modalStateErrors.flat();
-      }
-      else {
+      } else {
         toast.error(data);
       }
       break;
     case 401:
-      toast.error('unauthorized');
+      toast.error('unauthorised');
       break;
     case 404:
       history.push('/not-found');
@@ -58,8 +54,7 @@ axios.interceptors.response.use(async (response) => {
       break;
   }
   return Promise.reject(error);
-}
-);
+})
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 

@@ -20,10 +20,11 @@ export default class UserStore {
             const user = await agent.Account.login(credentials);
             store.commonStore.setToken(user.token);
             runInAction(() => {
-                this.user = user;
+                console.log('Login: ', user.username);
+                return this.user = user;
             });
             history.push('/activities');
-            store.modalStore.closeModal();
+            store.modalStore.closeModal();  
         }
         catch (error) {
             throw error;
@@ -40,7 +41,10 @@ export default class UserStore {
     getUser = async () => {
         try {
             const user = await agent.Account.current();
-            runInAction(() => this.user = user);
+            runInAction(() => {
+                console.log('Setting user: ', user.username);
+                return this.user = user;
+            });
         } catch (error) {
             console.log(error);
         }
